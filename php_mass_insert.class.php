@@ -33,7 +33,7 @@ class php_mass_insert {
 	public function insert($values)
 	{
 		# store to row cache
-		$query_rows[] = "('".implode("', '", $values)."')";
+		$this->query_rows[] = "('".implode("', '", $values)."')";
 
 		if($this->row_index == $this->rows_per_insert) {
 
@@ -47,7 +47,7 @@ class php_mass_insert {
 	}
 
 	private function insert_to_db() {
-		$res = mysql_query($this->query_body.implode(",", $this->query_rows)) or die ("Error: ".mysql_error()."\n");
+		$res = mysql_query($this->query_body.implode(",", $this->query_rows)) or die ("Error:\n".mysql_error()."\nQuery:\n".$this->query_body.implode(", ", $this->query_rows)."\n\n\n");
 		# empty row cache
 		$this->query_rows = array();
 	}
